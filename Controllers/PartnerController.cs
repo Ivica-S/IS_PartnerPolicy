@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IS_PartnerPolicy.Controllers
 {
-    //[Route("api/[controller]")]
-    //[ApiController]
     public class PartnerController : Controller
     {
         private readonly ILogger<PartnerController> _logger;
@@ -20,15 +18,24 @@ namespace IS_PartnerPolicy.Controllers
 
         public IActionResult Index()
         {
-            //GetPartners();
             return View();
         }
 
         [HttpGet]
         public IActionResult GetPartners()
         {
-            var partners = _repository.GetAllPartners();
-            return Ok(partners);
+            try
+            {
+                var partners = _repository.GetAllPartners();
+                return Ok(partners);
+            }
+            catch (Exception ex)
+            {
+                // Logiranje greške
+                _logger.LogError(ex, "Došlo je do pogreške prilikom dohvaćanja partnera.");
+                //return StatusCode(500, "Došlo je do greške prilikom obrade vašeg zahtjeva.");
+                return Json(new { success = false, message = "Došlo je do greške: " + ex.Message });
+            }
         }
 
         [HttpGet]
@@ -58,8 +65,6 @@ namespace IS_PartnerPolicy.Controllers
                 IsForeign = partner.IsForeign,
                 ExternalCode = partner.ExternalCode,
                 Gender = partner.Gender,
-                //InsuranceNumber = partner.InsuranceNumber,
-                //InsuranceAmount = partner.InsuranceAmount
 
             };
 

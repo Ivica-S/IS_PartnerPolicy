@@ -1,4 +1,6 @@
-﻿$(document).ready(function () {
+﻿
+import { showToast } from './toast.js';
+$(document).ready(function () {
     // Učitaj sve partnere na početku
     loadPartners();
 
@@ -18,7 +20,12 @@
 
                 tableBody.innerHTML = '';  // Očistimo postojeći sadržaj tabele
                 const fragment = document.createDocumentFragment();  // Koristimo fragment za bolje performanse
-                // Iteriramo kroz stavke ponude i kreiramo redove
+
+                if (data.message) {
+                    showToast('Greška pri učitavanju partnera!' + data.message);
+                    return;
+                }
+                // Dinamički
                 data.forEach(partner => {
                     const row = createRow(partner);
                     //totalPrice += stavka.ukupnaCijena;
@@ -115,7 +122,7 @@
         td.appendChild(buttonPolicy);
         return td;
     }
-    //Provjet za kolicinu i iznos police
+    //Provjera za kolicinu i iznos police
     function checkPartnerPolicyCountAndAmount(partner) {
         let isDanger = false;
         if (partner.policys.length > 5 || (partner.policys.reduce((total, policy) => total + parseFloat(policy.amount), 0) > 5000)) {
@@ -126,9 +133,8 @@
     // Klik na gumb za otvaranje modala s detaljima partnera
     $(document).on('click', '.viewDetailsBtn', function () {
         var dataPartnerId = $(this).data('id');
-        //$('#partnerModal').modal('show');
+        
         // Dohvati detalje partnera
-        //const dataPartnerId = e.target.getAttribute('data-id');
         fetch(`/Partner/GetPartnerById/${dataPartnerId}`).then(response => {
             if (!response.ok) {
                 throw new Error('Greška pri dohvaćanju detalja partnera');

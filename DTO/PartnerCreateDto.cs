@@ -29,7 +29,6 @@ namespace IS_PartnerPolicy.DTO
         [Required]
         public string CreatedByUser { get; set; }       // Email korisnika koji je unio partnera
         public char Gender { get; set; }
-        //public string PartnerTypeOptions { get; set; }
-        //public string GenderOptions { get; set; }
+
     }
 }

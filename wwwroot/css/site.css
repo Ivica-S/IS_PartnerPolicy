@@ -33,8 +33,8 @@ body {
  /* EDIT Partner*/
 /* Container to enable scroll */
 .form-container {
-    max-height: 70vh; /* Height of the form container */
-    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 70vh; 
+    overflow-y: auto; 
     padding: 10px;
     margin-bottom: 20px;
     background-color: #f8f9fa;
@@ -67,7 +67,7 @@ body {
 
 /*Lista partnera*/
 .table-responsive-vertical {
-    max-height: 900px;
+    max-height: 70vh;
     overflow-y: auto;
 }
 

@@ -50,16 +50,14 @@ $(document).ready(function () {
                 croatianPIN: $('#CroatianPIN').val(),
                 isForeign: $('#IsForeign').is(':checked'),
                 externalCode: $('#ExternalCode').val(),
-                // // insuranceNumber: $('#InsuranceNumber').val(),
-                // // insuranceAmount: $('#InsuranceAmount').val()
             };
 
 
             // Pošalji podatke na backend za unos partnera
             fetch(editPartnerUrl, {
-                method: 'POST',  // HTTP metoda
+                method: 'POST', 
                 headers: {
-                    'Content-Type': 'application/json',  // Specifikacija tipa sadržaja
+                    'Content-Type': 'application/json', 
                 },
                 body: JSON.stringify(partner),  // Pretvaranje objekta u JSON string
             })

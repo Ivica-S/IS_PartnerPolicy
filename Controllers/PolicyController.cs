@@ -57,7 +57,7 @@ namespace IS_PartnerPolicy.Controllers
             {
                 return Json(new { success = false, message = " Došlo je do greške: morate unjeti validan broj police i iznos mora biti veći od 0. " });
             }
-            //prvo provjeri da li broj poslice već postoji
+            //prvo provjeri da li broj police već postoji
             if (_repository.CheckIsPolicyExisting(policy.PolicyNumber))
             {
                 return Json(new { success = false, message = " Taj broj police već postoji. " });

@@ -26,11 +26,7 @@ namespace IS_PartnerPolicy.Models
         public char Gender { get; set; }                // Spol partnera (M, F, N)
 
         public string FullName => FirstName + " " + LastName;
-        /*POLICA*/
-        //public string InsuranceNumber { get; set; } // Broj police
-        //public decimal InsuranceAmount { get; set; } // Iznos police
 
-        //public List<PartnerPolica> PartnerPolices { get; set; } // Lista polica koje pripadaju partneru
 
         public SelectList PartnerTypeOptions { get; set; }
         public SelectList GenderOptions { get; set; }

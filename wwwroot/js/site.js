@@ -4,12 +4,5 @@ import { showToast } from './toast.js';
 $(document).ready(function () {
     
 
-    // Funkcija za prikazivanje detalja
-    //function showDetails(partnerId) {
-    //    // Možeš pozvati Fetch ili otvoriti modal na temelju partnerId
-    //    $('#partnerModal').modal('show');
-    //    console.log("Prikaz detalja za partnera ID: " + partnerId);
-    //} 
-
 });
         

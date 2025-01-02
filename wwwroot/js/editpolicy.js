@@ -31,7 +31,7 @@ $(document).ready(function () {
                     if (tbody) {
                         tbody.innerHTML = ''; // Očisti postojeće redove
                         let totalAmount = 0; // Zbroj iznosa svih polica
-                        // Dodaj nove redove u tablicu
+                        // Da ne refresha cijelu straicu počisti i nacrtaj ponovo
                         data.model.policys.forEach(polica => {
                             const newRow = document.createElement('tr');
                             newRow.innerHTML = `

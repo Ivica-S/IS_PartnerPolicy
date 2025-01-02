@@ -23,12 +23,10 @@ namespace IS_PartnerPolicy.Models
         public string ExternalCode { get; set; }
         public char Gender { get; set; }
 
-        public List<PartnerPolica> PartnerPolices { get; set; } = new List<PartnerPolica>(); // Osiguranje da je ovo lista // Lista polica koje pripadaju partneru
-
         public SelectList PartnerTypeOptions { get; set; }
         public SelectList GenderOptions { get; set; }
         // Kolekcija polica koje pripadaju ovom partneru
-        public List<PartnerPolica> Policys { get; set; }
+        public List<PartnerPolica> Policys { get; set; } = new List<PartnerPolica>(); // Osiguranje da je ovo lista
 
         // Konstruktor za inicijalizaciju SelectList za Gender
         public EditPartnerModel()
