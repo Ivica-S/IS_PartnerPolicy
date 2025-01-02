@@ -57,19 +57,20 @@ namespace IS_PartnerPolicy.Controllers
             {
                 return Json(new { success = false, message = " Došlo je do greške: morate unjeti validan broj police i iznos mora biti veći od 0. " });
             }
-            //prvo provjeri da li broj police već postoji
-            if (_repository.CheckIsPolicyExisting(policy.PolicyNumber))
-            {
-                return Json(new { success = false, message = " Taj broj police već postoji. " });
-            }
             try
             {
+                //prvo provjeri da li broj police već postoji
+                if (_repository.CheckIsPolicyExisting(policy.PolicyNumber))
+                {
+                    return Json(new { success = false, message = " Taj broj police već postoji. " });
+                }
+
                 var updatedPartner = _repository.AddPartnerPolicy(policy.PartnerId, policy.PolicyNumber, policy.Amount);
 
-            if (updatedPartner == null)
-            {
-                return NotFound(); // Ako partner nije pronađen, vratimo 404
-            }
+                if (updatedPartner == null)
+                {
+                    return NotFound(); // Ako partner nije pronađen, vratimo 404
+                }
                 var model = new EditPartnerModel
                 {
                     LastName = updatedPartner.LastName,

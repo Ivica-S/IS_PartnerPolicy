@@ -323,30 +323,60 @@ namespace IS_PartnerPolicy.Repository
 
         public bool CheckIsPolicyExisting( string policyNumber)
         {
-            using (IDbConnection dbConnection = new SqlConnection(_connectionString))
+            try
             {
-                dbConnection.Open();
+                using (IDbConnection dbConnection = new SqlConnection(_connectionString))
+                {
+                    dbConnection.Open();
 
-                // SQL upit koji provjerava postoji li već polica sa zadanim brojem
-                var query = "SELECT COUNT(1) FROM PartnerPolica WHERE PolicyNumber = @PolicyNumber";
+                    // SQL upit koji provjerava postoji li već polica sa zadanim brojem
+                    var query = "SELECT COUNT(1) FROM PartnerPolica WHERE PolicyNumber = @PolicyNumber";
 
-                // Izvrši upit i provjeri je li broj polica veći od 0
-                var result = dbConnection.ExecuteScalar<int>(query, new { PolicyNumber = policyNumber });
+                    // Izvrši upit i provjeri je li broj polica veći od 0
+                    var result = dbConnection.ExecuteScalar<int>(query, new { PolicyNumber = policyNumber });
 
-                // Ako COUNT(1) vraća više od 0, znači da polica postoji
-                return result > 0;
+                    // Ako COUNT(1) vraća više od 0, znači da polica postoji
+                    return result > 0;
+                }
+            }
+            catch (SqlException ex)
+            {
+                // Logiranje SQL greške
+                _logger.LogError(ex, "SQL pogreška prilikom provjere postojanja police s brojem: {PolicyNumber}.", policyNumber);
+                throw;  //  bacanje iznimke prema višem sloju
+            }
+            catch (Exception ex)
+            {
+                // Logiranje drugih grešaka
+                _logger.LogError(ex, "Došlo je do pogreške pri provjeri postojanja police s brojem: {PolicyNumber}.", policyNumber);
+                throw;  //  bacanje iznimke prema višem sloju
             }
         }
 
         public bool IsExternalCodeUnique(string externalCode)
         {
-            using (IDbConnection dbConnection = new SqlConnection(_connectionString))
+            try
             {
-                dbConnection.Open();
-                var query = "SELECT COUNT(1) FROM Partner WHERE ExternalCode = @ExternalCode";
-                var result =  dbConnection.ExecuteScalar<int>(query, new { ExternalCode = externalCode });
-                // Ako COUNT(1) vraća više od 0, znači da ExternalCode postoji
-                return result > 0;
+                using (IDbConnection dbConnection = new SqlConnection(_connectionString))
+                {
+                    dbConnection.Open();
+                    var query = "SELECT COUNT(1) FROM Partner WHERE ExternalCode = @ExternalCode";
+                    var result = dbConnection.ExecuteScalar<int>(query, new { ExternalCode = externalCode });
+                    // Ako COUNT(1) vraća više od 0, znači da ExternalCode postoji
+                    return result > 0;
+                }
+            }
+            catch (SqlException ex)
+            {
+                // Logiranje SQL greške
+                _logger.LogError(ex, "SQL pogreška prilikom provjere jedinstvenosti ExternalCode: {ExternalCode}.", externalCode);
+                throw;  // bacanje iznimke prema višem sloju
+            }
+            catch (Exception ex)
+            {
+                // Logiranje drugih grešaka
+                _logger.LogError(ex, "Došlo je do pogreške pri provjeri jedinstvenosti ExternalCode: {ExternalCode}.", externalCode);
+                throw;  // bacanje iznimke prema višem sloju
             }
         }
       
