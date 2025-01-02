@@ -1,0 +1,95 @@
+﻿using IS_PartnerPolicy.Models;
+using IS_PartnerPolicy.Repository;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+
+namespace IS_PartnerPolicy.Controllers
+{
+    public class PolicyController : Controller
+    {
+        private readonly ILogger<PolicyController> _logger;
+        private readonly PartnerRepository _repository;
+
+        public PolicyController(ILogger<PolicyController> logger, PartnerRepository repository)
+        {
+            _logger = logger;
+            _repository = repository;
+        }
+
+        public IActionResult Index()
+        {
+            //GetPartners();
+            return View();
+        }
+
+        public IActionResult EditPolicy(int id)
+        {
+            var partner = _repository.GetPartnerWithPolicies(id);
+            if (partner == null)
+                return NotFound(); // Ako partner nije pronađen
+
+            var model = new EditPartnerModel
+            {
+                PartnerId = partner.PartnerId,
+                FirstName = partner.FirstName,
+                LastName = partner.LastName,
+                Address = partner.Address,
+                PartnerNumber = partner.PartnerNumber,
+                CroatianPIN = partner.CroatianPIN,
+                PartnerTypeId = partner.PartnerTypeId,
+                CreatedAtUtc = partner.CreatedAtUtc,
+                CreatedByUser = partner.CreatedByUser,
+                IsForeign = partner.IsForeign,
+                ExternalCode = partner.ExternalCode,
+                Gender = partner.Gender,
+                Policys = partner.Policys
+                //InsuranceNumber = partner.InsuranceNumber,
+                //InsuranceAmount = partner.InsuranceAmount
+
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult AddPolicy([FromBody] EditPolicyModel policy)
+        {
+ 
+            // Provjeri da su podaci validni
+            if (string.IsNullOrEmpty(policy.PolicyNumber) || policy.Amount <= 0)
+            {
+                return Json(new { success = false, message = " Došlo je do greške: morate unjeti validan broj police i iznos mora biti veći od 0. " });
+            }
+            //prvo provjeri da li broj poslice već postoji
+            if (_repository.CheckIsPolicyExisting(policy.PolicyNumber))
+            {
+                return Json(new { success = false, message = " Taj broj police već postoji. " });
+            }
+            try
+            {
+                var updatedPartner = _repository.AddPartnerPolicy(policy.PartnerId, policy.PolicyNumber, policy.Amount);
+
+            if (updatedPartner == null)
+            {
+                return NotFound(); // Ako partner nije pronađen, vratimo 404
+            }
+                var model = new EditPartnerModel
+                {
+                    LastName = updatedPartner.LastName,
+                    FirstName = updatedPartner.FirstName,
+                    PartnerId = updatedPartner.PartnerId,
+                    Policys = updatedPartner.Policys,
+                };
+
+                // Vraćamo uspjeh i ažurirani partner s policama
+                return Json(new { success = true, model = model });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Došlo je do pogreške prilikom spremanja police.");
+                return Json(new { success = false, message = "Došlo je do greške: " + ex.Message });
+            }
+        }
+
+    }
+}

@@ -1,0 +1,110 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+/* Lista Partnera */
+#partnersTable tbody tr {
+    cursor: pointer;
+}
+
+  tbody tr:hover {
+    background-color: #f1f1f1; 
+}
+
+ /* EDIT Partner*/
+/* Container to enable scroll */
+.form-container {
+    max-height: 70vh; /* Height of the form container */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+/* Making the form elements more compact */
+.form-group {
+    margin-bottom: 15px; /* Reduced margin for tighter spacing */
+}
+
+.form-control {
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+/* Toast */
+.toast-close {
+    content: "\2715" !important;
+    color: #000 !important;
+}
+
+.ponuda-toast {
+    color: #333 !important; /* Tamniji tekst za bolju èitljivost */
+    padding: 8px;
+    border-radius: 0 0 6px 6px !important; /* Zaobljeni kutovi samo na dnu */
+    max-width: calc(80% - 20px) !important;
+}
+
+
+/*Lista partnera*/
+/*/* Stil za gumb Lista partnera */
+.btn.gridlistapartnera {
+    position: relative; /* Postavljamo relativno pozicioniranje gumba za pozicioniranje badge-a unutar njega */
+    height:40px;
+    /*width:50px !important;*/
+}
+.table-responsive-vertical {
+    max-height: 900px;
+    overflow-y: auto;
+}
+
+/* Stil za badge */
+.badge {
+    position: absolute; /* Pozicioniraj badge unutar gumba */
+    top: 0px; /*Gurni badge u gornji dio gumba */
+    right: 11px; /* Gurni badge u desni kut gumba */
+    transform: translate(50%, -70%); /* Mala korekcija kako bi badge bio u potpunosti u gornjem desnom kutu */
+    z-index: 1; /* Osiguraj da je badge iznad ostalih elemenata unutar gumba */
+    padding: 0.1rem 0.19rem !important; /* Unutarnji razmak za badge */
+    font-size: 0.63rem !important; /* Manja velièina fonta za badge */
+}
+/* Poveæaj velièinu ikone */
+.btn i.bi-file-earmark {
+    font-size: 1.28rem; /* Poveæaj velièinu ikone */
+}
+
+/*Obojaj redak za novog partnera*/
+.new-partner-highlight {
+    background-color: #d4edda; /* Zelena boja ili bilo koja koja odgovara dizajnu */
+    animation: highlight-animation 2s ease-in-out;
+}
+
+@keyframes highlight-animation {
+    0% {
+        background-color: #d4edda;
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+

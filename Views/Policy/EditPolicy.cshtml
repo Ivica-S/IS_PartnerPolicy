@@ -1,0 +1,92 @@
+﻿@model EditPartnerModel
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/lib/bootstrap/dist/css/bootstrap4.5.2.min.css" rel="stylesheet" />
+</head>
+
+<div class="container mt-5">
+<h2>@Model.LastName - pripadajuće police</h2>
+
+<!-- Gumb za dodavanje nove police -->
+
+<div class="d-flex justify-content-between w-100 mt-4">
+    <a href="@Url.Action("Index", "Partner")" class="btn btn-secondary">
+        <i class="bi bi-arrow-left-circle"></i> Lista partnera
+    </a>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPolicyModal">
+        <i class="bi bi-plus-circle"></i> Dodaj novu policu
+    </button>
+</div>
+
+@if (Model.Policys.Count == 0)
+{
+    <p class="mt-4">Ovaj partner nema pridružene police.</p>
+}
+else
+{
+<!-- Tablica za prikaz polica -->
+    <table class="table mt-4">
+    <thead>
+       <tr class="table-secondary">
+            <th>Polica ID</th>
+            <th>Broj Police</th>
+            <th>Iznos Police</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var polica in Model.Policys)
+        {
+           <tr>
+                <td>@polica.PolicaId</td>
+                <td>@polica.PolicyNumber</td>
+                <td>@polica.Amount</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+<!-- Modal za unos nove police -->
+<div data-partner-id="@Model.PartnerId" class="modal fade" id="addPolicyModal" tabindex="-1" aria-labelledby="addPolicyModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPolicyModalLabel">Unos nove police</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Forma za unos nove police -->
+                <form id="addPolicyForm">
+                    <div class="mb-3">
+                        <label for="PolicyNumber" class="form-label">Broj police</label>
+                        <input type="text" class="form-control" id="PolicyNumber" placeholder="Unesite broj police" required minlength="10" maxlength="15">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Amount" class="form-label">Iznos police</label>
+                        <input type="number" class="form-control" id="Amount" placeholder="Unesite iznos police" min=1 required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+                <button type="button" class="btn btn-primary" id="savePolicyButton">Spremi policu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+   <!-- Toast container -->
+    <div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+        <!-- Toast poruka -->
+    </div>
+</div>
+<!-- jQuery i Bootstrap JS (ako već nisu uključeni u tvojoj aplikaciji) -->
+@* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script> *@
+
+<script type="module" src="~/js/editpolicy.js"></script>
+<script>
+    // Generiranje URL-a za akciju AddPolicy unutar Policy kontrolera
+    var addPolicyUrl = '@Url.Action("AddPolicy", "Policy")';
+</script>

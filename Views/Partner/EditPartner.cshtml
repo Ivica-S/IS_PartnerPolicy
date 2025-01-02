@@ -1,0 +1,91 @@
+﻿@model IS_PartnerPolicy.Models.EditPartnerModel
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/lib/bootstrap/dist/css/bootstrap4.5.2.min.css" rel="stylesheet" />
+</head>
+<div class="container mt-5">
+<h2>Uredi Partnera</h2>
+
+<form id="editPartnerForm" method="post">
+    <div class="form-container">
+    <div class="form-group">
+        <label for="FirstName">Ime</label>
+        <input type="text" class="form-control" id="FirstName" name="FirstName" value="@Model.FirstName" required minlength="2" maxlength="255" />
+    </div>
+
+    <div class="form-group">
+        <label for="LastName">Prezime</label>
+        <input type="text" class="form-control" id="LastName" name="LastName" value="@Model.LastName" required minlength="2" maxlength="255" />
+    </div>
+
+    <div class="form-group">
+        <label for="Address">Adresa</label>
+        <input type="text" class="form-control" id="Address" name="Address" value="@Model.Address" />
+    </div>
+
+    <div class="form-group">
+        <label for="PartnerNumber">Broj partnera</label>
+            <input type="number" class="form-control" id="PartnerNumber" name="PartnerNumber" value="@Model.PartnerNumber" required minlength="20" maxlength="20" />
+    </div>
+
+    <div class="form-group">
+        <label for="CroatianPIN">OIB</label>
+        <input type="text" class="form-control" id="CroatianPIN" name="CroatianPIN" value="@Model.CroatianPIN" />
+    </div>
+
+    <div class="form-group">
+        <label for="PartnerTypeId">Vrsta partnera</label>
+            <select class="form-control" id="PartnerTypeId" name="PartnerTypeId" asp-for="PartnerTypeId" asp-items="@Model.PartnerTypeOptions" required>
+            </select>
+    </div>
+
+    <div class="form-group">
+        <label for="CreatedAtUtc">Datum kreiranja</label>
+        <input type="datetime-local" readonly class="form-control" id="CreatedAtUtc" name="CreatedAtUtc" value="@Model.CreatedAtUtc.ToString("yyyy-MM-ddTHH:mm:ss")" required />
+    </div>
+
+    <div class="form-group">
+        <label for="CreateByUser">Kreirano od</label>
+        <input type="email" class="form-control" id="CreatedByUser" name="CreatedByUser" value="@Model.CreatedByUser" required maxlength="255" />
+    </div>
+
+    <div class="form-group">
+        <label for="IsForeign">Strani partner</label>
+        <input type="checkbox" id="IsForeign" name="IsForeign" value="true" @(Model.IsForeign ? "checked" : "") />
+    </div>
+
+    <div class="form-group">
+        <label for="ExternalCode">Vanjski kod</label>
+        <input type="text" class="form-control" id="ExternalCode" name="ExternalCode" value="@Model.ExternalCode" required minlength="10" maxlength="20" />
+    </div>
+
+    <div class="form-group">
+        <label for="Gender">Spol</label>
+        <select class="form-control" id="Gender" name="Gender" asp-for="Gender" asp-items="@Model.GenderOptions" required>
+        </select>
+    </div>
+
+    @* <div class="form-group">
+        <label for="InsuranceNumber">Broj police</label>
+        <input type="text" class="form-control" id="InsuranceNumber" name="InsuranceNumber" value="@Model.InsuranceNumber" required minlength="10" maxlength="15" />
+    </div>
+
+    <div class="form-group">
+        <label for="InsuranceAmount">Iznos police</label>
+        <input type="number" class="form-control" id="InsuranceAmount" name="InsuranceAmount" value="@Model.InsuranceAmount" required step="0.01" />
+    </div> *@
+    </div>
+    <div class="d-flex justify-content-end">
+    <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Spremi izmjene</button>
+        <a class="btn btn-outline-danger  ms-2" asp-controller="Partner" asp-action="Index">Zatvori</a>
+    </div>
+</form>
+</div>
+
+<script type="module" src="~/js/editpartner.js"></script>
+
+<script>
+    // Generiranje URL-a za akciju AddPolicy unutar Policy kontrolera
+    var editPartnerUrl = '@Url.Action("EditPartner", "Partner")';
+</script>

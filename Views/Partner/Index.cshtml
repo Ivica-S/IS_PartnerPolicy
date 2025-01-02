@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "Partneri";
+}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/lib/bootstrap/dist/css/bootstrap4.5.2.min.css" rel="stylesheet" />
+</head>
+<div class="container mt-4">
+    <div class="d-flex justify-content-end">
+        @* <button class="btn btn-primary" asp-controller="Partner" asp-action="NewPartner" name="btnNoviPartner">Dodaj novog partnera</button> *@
+        <a class="btn btn-primary" asp-controller="Partner" asp-action="NewPartner"><i class="bi bi-plus-circle"></i> Novi partner</a>
+        </div>
+<div class="p-4 shadow-sm rounded bg-light">
+    <h2>Lista partnera</h2>
+        <div class="table-responsive table-responsive-vertical">
+        <table class="table" id="partnersTable">
+        <thead>
+                <tr class="table-secondary">
+                @* <th>First Name</th>
+                <th>Last Name</th> *@
+                <th>Ime i prezime</th>
+                <th>Broj partnera</th>
+                <th>OIB</th>
+                <th>Kreirao</th>
+                <th>Strani partner</th>
+                <th>Vrsta partnera</th>
+                <th>Spol</th>
+                <th class="text-center">Akcije</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Partneri će biti učitani putem JavaScript-a -->
+        </tbody>
+    </table>
+   </div>
+</div>
+</div>
+
+<!-- Modal za detalje partnera -->
+<div class="modal fade" id="partnerModal" tabindex="-1" role="dialog" aria-labelledby="partnerModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="partnerModalLabel">Detalji Partnera</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Detalji partnera će biti učitani ovdje -->
+                <p id="modalFirstName"></p>
+                <p id="modalAddress"></p>
+                <p id="modalPartnerNumber"></p>
+                <p id="croatianPIN"></p>
+                <p id="modalPartnerType"></p>
+                <p id="modalcreatedAtUtc"></p>
+                <p id="modalcreatedByUser"></p>
+                <p id="modalisForeign"></p>
+                <p id="modalexternalCode"></p>
+                <p id="modalgender"></p>
+                <p id="modalpolicys"></p>
+                <!-- Možete dodati i ostale podatke -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast container -->
+<div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+    <!-- Toast poruka -->
+</div>
+
+<script src="~/js/getpartners.js"></script>

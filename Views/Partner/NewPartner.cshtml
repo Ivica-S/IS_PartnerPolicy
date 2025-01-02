@@ -1,0 +1,129 @@
+﻿@model IS_PartnerPolicy.Models.Partner
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unos Partnera</title>
+    <!-- Bootstrap CSS -->
+    <link href="~/lib/bootstrap/dist/css/bootstrap4.5.2.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Unos Partnera</h2>
+        <form id="partnerForm">
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="FirstName">Ime</label>
+                    <input type="text" class="form-control" min="2" id="FirstName" name="FirstName" value="@Model.FirstName" required minlength="2" maxlength="255" />
+                </div>
+
+                <div class="form-group">
+                    <label for="LastName">Prezime</label>
+                    <input type="text" class="form-control" min="2" id="LastName" name="LastName" value="@Model.LastName" required minlength="2" maxlength="255" />
+                </div>
+
+                <div class="form-group">
+                    <label for="Address">Adresa</label>
+                    <input type="text" class="form-control" id="Address" name="Address" value="@Model.Address" />
+                </div>
+
+                <div class="form-group">
+                    <label for="PartnerNumber">Broj partnera</label>
+                    <input type="number" class="form-control" min="1" id="PartnerNumber" name="PartnerNumber" minlength="20" maxlength="20" value="@Model.PartnerNumber" required  />
+                </div>
+
+                <div class="form-group">
+                    <label for="CroatianPIN">OIB</label>
+                    <input type="text" class="form-control" id="CroatianPIN" name="CroatianPIN" value="@Model.CroatianPIN" />
+                </div>
+            <div class="form-group">
+                <label for="PartnerType">Partner Type</label>
+                <select class="form-control" id="PartnerTypeId" name="PartnerTypeId" asp-for="PartnerTypeId" asp-items="@Model.PartnerTypeOptions" required>
+                </select>
+            </div>
+             @*    <div class="form-group">
+                    <label for="CreatedAtUtc">Datum kreiranja</label>
+                    <input type="datetime-local" readonly class="form-control" id="CreatedAtUtc" name="CreatedAtUtc" value="@Model.CreatedAtUtc.ToString("yyyy-MM-ddTHH:mm:ss")" required />
+                </div> *@
+
+                <div class="form-group">
+                    <label for="CreateByUser">Kreirano od</label>
+                    <input type="email" class="form-control" id="CreatedByUser" name="CreatedByUser" value="@Model.CreatedByUser" required maxlength="255" />
+                </div>
+
+                <div class="form-group">
+                    <label for="IsForeign">Strani partner</label>
+                    <input type="checkbox" id="IsForeign" name="IsForeign" value="true" @(Model.IsForeign ? "checked" : "") />
+                </div>
+
+                <div class="form-group">
+                    <label for="ExternalCode">Vanjski kod</label>
+                    <input type="text" class="form-control" id="ExternalCode" name="ExternalCode" value="@Model.ExternalCode" required minlength="10" maxlength="20" />
+                </div>
+            <div class="form-group">
+                <label for="Gender">Gender</label>
+                <select class="form-control" id="Gender" name="Gender" asp-for="Gender" asp-items="@Model.GenderOptions" required>
+                </select>
+            </div>
+              @*   <div class="form-group">
+                    <label for="InsuranceNumber">Broj police</label>
+                    <input type="text" class="form-control" id="InsuranceNumber" name="InsuranceNumber" value="@Model.InsuranceNumber" required minlength="10" maxlength="15" />
+                </div>
+
+                <div class="form-group">
+                    <label for="InsuranceAmount">Iznos police</label>
+                    <input type="number" class="form-control" id="InsuranceAmount" name="InsuranceAmount" value="@Model.InsuranceAmount" required step="0.01" />
+                </div> *@
+            </div>
+            @* <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPolicyModal"><i class="bi bi-plus-circle"></i> Dodaj Policu</button> *@
+            <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Spremi partnera</button>
+
+                <a class="btn btn-outline-danger  ms-2" asp-controller="Partner" asp-action="Index">Otkaži unos</a>
+            </div>
+        </form>
+
+        <!-- Modalni dijalog za unos police -->
+     @*    <div class="modal fade" id="addPolicyModal" tabindex="-1" role="dialog" aria-labelledby="addPolicyModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addPolicyModalLabel">Unos Police</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="policyForm">
+                            <div class="form-group">
+                                <label for="policyNumber">Broj Police</label>
+                                <input type="text" class="form-control" id="policyNumber" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="policyAmount">Iznos Police</label>
+                                <input type="number" class="form-control" id="policyAmount" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Unesi Policu</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    </div> 
+    <!-- Toast container -->
+    <div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+        <!-- Toast poruka -->
+    </div>
+    <script type="module" src="~/js/newpartner.js"></script>
+ @*    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js">  
+    </script>*@
+    <script>
+        // Generiranje URL-a za akciju AddPolicy unutar Policy kontrolera
+        var addNewPartnerUrl = '@Url.Action("AddNewPartner", "Partner")';
+    </script>
+</body>
+</html>
