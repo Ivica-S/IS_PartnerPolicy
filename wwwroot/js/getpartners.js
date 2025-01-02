@@ -162,10 +162,9 @@ $(document).ready(function () {
     });
 
     function getPolicysForModalDetails(policys) {
+        let policiesText = '<br>';
         // Provjeri je li partner.policys niz i nije prazan
         if (policys && policys.length > 0) {
-
-            let policiesText = '<br>';
 
             let totalAmount = 0;
             
