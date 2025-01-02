@@ -8,6 +8,7 @@ namespace IS_PartnerPolicy.Models
     public class EditPartnerModel
     {
         public int PartnerId { get; set; }
+        public string FullName => FirstName + " " + LastName;
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Address { get; set; }
@@ -22,7 +23,7 @@ namespace IS_PartnerPolicy.Models
         public string ExternalCode { get; set; }
         public char Gender { get; set; }
 
-        public List<PartnerPolica> PartnerPolices { get; set; } // Lista polica koje pripadaju partneru
+        public List<PartnerPolica> PartnerPolices { get; set; } = new List<PartnerPolica>(); // Osiguranje da je ovo lista // Lista polica koje pripadaju partneru
 
         public SelectList PartnerTypeOptions { get; set; }
         public SelectList GenderOptions { get; set; }

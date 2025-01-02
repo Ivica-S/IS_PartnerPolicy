@@ -18,7 +18,6 @@ namespace IS_PartnerPolicy.Controllers
 
         public IActionResult Index()
         {
-            //GetPartners();
             return View();
         }
 
@@ -43,8 +42,6 @@ namespace IS_PartnerPolicy.Controllers
                 ExternalCode = partner.ExternalCode,
                 Gender = partner.Gender,
                 Policys = partner.Policys
-                //InsuranceNumber = partner.InsuranceNumber,
-                //InsuranceAmount = partner.InsuranceAmount
 
             };
 

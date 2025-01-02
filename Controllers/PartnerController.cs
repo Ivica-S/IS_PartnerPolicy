@@ -92,14 +92,15 @@ namespace IS_PartnerPolicy.Controllers
                     return BadRequest("Nema promjena za ažuriranje.");
                 }
 
-                // Ako je uspješno ažurirano, logiraj to i vrati korisnika na listu
-                _logger.LogInformation("Partner s ID: {PartnerId} uspješno ažuriran.", id);
+                // Ako je uspješno ažurirano
+                _logger.LogInformation("Partner s ID: {id} uspješno ažuriran.", id);
                 return Json(new { success = true });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Došlo je do pogreške pri ažuriranju partnera s ID: {PartnerId}.", id);
-                return StatusCode(500, "Greška pri ažuriranju podataka. Pokušajte ponovno.");
+                _logger.LogError(ex, "Došlo je do pogreške pri ažuriranju partnera s ID: {id}.", id);
+                return Json(new { success = false, message = "Došlo je do greške: " + ex .Message});
+                //return StatusCode(500, "Greška pri ažuriranju podataka. Pokušajte ponovno.");
             }
         }
 

@@ -9,7 +9,7 @@ namespace IS_PartnerPolicy.Models
         public int PolicaId { get; set; }
         public int PartnerId { get; set; }
         [Required]
-        [StringLength(15, MinimumLength = 10)]
+        [StringLength(15, MinimumLength = 10, ErrorMessage = "Broj police mora biti između 10 i 15 znakova.")]
         public string PolicyNumber { get; set; } // Broj police
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Količina mora biti veća od 0.")]

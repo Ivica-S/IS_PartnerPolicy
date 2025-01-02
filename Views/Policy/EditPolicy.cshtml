@@ -7,13 +7,19 @@
 </head>
 
 <div class="container mt-5">
-<h2>@Model.LastName - pripadajuće police</h2>
+    <h2>
+        @if (Model.Policys.Count > 5 || Model.Policys.Sum(p => p.Amount) > 5000)
+        {
+            <span class="text-danger">*</span> <!-- Crvena zvjezdica ako su uvjeti ispunjeni -->
+        }
+        @Model.FullName - pripadajuće police
+    </h2>
 
 <!-- Gumb za dodavanje nove police -->
 
 <div class="d-flex justify-content-between w-100 mt-4">
     <a href="@Url.Action("Index", "Partner")" class="btn btn-secondary">
-        <i class="bi bi-arrow-left-circle"></i> Lista partnera
+            <i class="bi bi-arrow-left-circle me-2"></i> Lista partnera
     </a>
     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPolicyModal">
         <i class="bi bi-plus-circle"></i> Dodaj novu policu
@@ -46,6 +52,11 @@ else
         }
     </tbody>
 </table>
+        <!-- Zbrojeni iznos svih polica -->
+        <div class="mt-4 total-amount">
+            <strong>Ukupno iznos svih polica: </strong>
+            @Model.Policys.Sum(p => p.Amount) EUR <!-- Zbrajanje Amount svih polica -->
+        </div>
 }
 <!-- Modal za unos nove police -->
 <div data-partner-id="@Model.PartnerId" class="modal fade" id="addPolicyModal" tabindex="-1" aria-labelledby="addPolicyModalLabel">

@@ -41,9 +41,9 @@ body {
     border-radius: 5px;
 }
 
-/* Making the form elements more compact */
+
 .form-group {
-    margin-bottom: 15px; /* Reduced margin for tighter spacing */
+    margin-bottom: 15px; 
 }
 
 .form-control {
@@ -70,7 +70,7 @@ body {
 .btn.gridlistapartnera {
     position: relative; /* Postavljamo relativno pozicioniranje gumba za pozicioniranje badge-a unutar njega */
     height:40px;
-    /*width:50px !important;*/
+    /*width:60px !important;*/
 }
 .table-responsive-vertical {
     max-height: 900px;
@@ -79,18 +79,30 @@ body {
 
 /* Stil za badge */
 .badge {
-    position: absolute; /* Pozicioniraj badge unutar gumba */
+    position: absolute;  /*Pozicioniraj badge unutar gumba */
     top: 0px; /*Gurni badge u gornji dio gumba */
-    right: 11px; /* Gurni badge u desni kut gumba */
-    transform: translate(50%, -70%); /* Mala korekcija kako bi badge bio u potpunosti u gornjem desnom kutu */
-    z-index: 1; /* Osiguraj da je badge iznad ostalih elemenata unutar gumba */
-    padding: 0.1rem 0.19rem !important; /* Unutarnji razmak za badge */
-    font-size: 0.63rem !important; /* Manja velièina fonta za badge */
+    right: 1px;  /*Gurni badge u desni kut gumba*/ 
+    transform: translate(-30%, -70%);  /*Mala korekcija kako bi badge bio u potpunosti u gornjem desnom kutu 5*/
+    z-index: 1;  /*Osiguraj da je badge iznad ostalih elemenata unutar gumba*/ 
+    padding: 0.1rem 0.19rem !important;  /*Unutarnji razmak za badge*/ 
+    font-size: 0.63rem !important;  /*Manja velièina fonta za badge*/ 
 }
+.td-btn-action {
+    display: flex; /* Postavljamo flexbox za raspored gumba */
+    align-items: center; /* Poravnanje gumba vertikalno */
+}
+
+/* Stil za gumb, uklanjanje position: absolute */
+a.btn {
+    display: flex;
+    align-items: center; /* Poravnanje sadržaja unutar gumba */
+    justify-content: center; /* Poravnanje ikona i badgea */
+}
+
 /* Poveæaj velièinu ikone */
-.btn i.bi-file-earmark {
-    font-size: 1.28rem; /* Poveæaj velièinu ikone */
-}
+/*.btn i.bi-file-earmark {
+    font-size: 1.28rem;*/ /* Poveæaj velièinu ikone */
+/*}*/
 
 /*Obojaj redak za novog partnera*/
 .new-partner-highlight {

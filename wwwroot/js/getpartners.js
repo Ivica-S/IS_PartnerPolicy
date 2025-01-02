@@ -59,7 +59,12 @@
         const row = document.createElement('tr');
         row.setAttribute('data-id', partner.partnerId);
         row.classList.add('viewDetailsBtn');
-        row.appendChild(createTextCell('fullName', partner.fullName));
+        // Provjera uvjeta za crvenu zvjezdicu
+        let fullName = partner.fullName;
+        if (checkPartnerPolicyCountAndAmount(partner)) {
+            fullName = '<span style="color: red;">*</span> ' + fullName;  // Dodaj crvenu zvjezdicu
+        }
+        row.appendChild(createTextCell('fullName', fullName));
         row.appendChild(createTextCell('partnerNumber', partner.partnerNumber));
         row.appendChild(createTextCell('croatianPIN', partner.croatianPIN));
         row.appendChild(createTextCell('createdByUser', partner.createdByUser));
@@ -74,25 +79,26 @@
     function createTextCell(id, value) {
         const td = document.createElement('td');
         td.classList.add(`text-center`);
-        td.textContent = value;
+        td.innerHTML = value;
         return td;
     }
     //Uredi partnera i Uredi policu
     function createButtonCell(partner, title, buttonClass, iconClass, onClick) {
         const td = document.createElement('td');
+        td.classList.add('td-btn-action');
         const buttonPartner = document.createElement('a');
         buttonPartner.setAttribute('data-id', partner.partnerId);
         buttonPartner.setAttribute('href', `/Partner/EditPartner/${partner.partnerId}`);
         buttonPartner.classList.add('btn','gridlistapartnera', buttonClass,'me-2');
         buttonPartner.title = title;
-        buttonPartner.innerHTML = `<i class="bi bi-pencil-fill"></i> <i class="bi bi-person-fill"></i>`;// + title;
+        buttonPartner.innerHTML = `<span><i class="bi bi-pencil-fill"></i> <i class="bi bi-person-fill"></i></span>`;// + title;
 
         //buttonPartner.style.marginRight = '10px'; 
         td.appendChild(buttonPartner);
 
         // Provjeri uvjete za danger klasu
         let badgeClass = "bg-success";  // Defaultna boja za badge
-        if (partner.policys.length > 5 || partner.policys.reduce((total, policy) => total + policy.Amount, 0) > 5000) {
+        if (checkPartnerPolicyCountAndAmount(partner)) {
             badgeClass = "bg-danger";  // Ako ima više od 5 polica ili ukupan iznos polica prelazi 5000, promijeni u bg-danger
         }
         const buttonPolicy = document.createElement('a');
@@ -102,12 +108,20 @@
         buttonPolicy.title = title + " polica";
         //buttonPolicy.innerHTML = `<i class="bi bi-pencil-fill"></i> <i class="bi bi-file-earmark"</i>` + `<span class="badge ${badgeClass} bg-grey">${partner.policys.length}</span>`;
         buttonPolicy.innerHTML = `
-                                    <i class="bi bi-file-earmark"></i>
-                                    <span class="badge ${badgeClass}">${partner.policys.length}</span>
+                                    
+                                    <span ><i class="bi bi-file-earmark"></i> <span class="badge ${badgeClass}">${partner.policys.length}</span></span>
                                 `;
   
         td.appendChild(buttonPolicy);
         return td;
+    }
+    //Provjet za kolicinu i iznos police
+    function checkPartnerPolicyCountAndAmount(partner) {
+        let isDanger = false;
+        if (partner.policys.length > 5 || (partner.policys.reduce((total, policy) => total + parseFloat(policy.amount), 0) > 5000)) {
+            isDanger = true;  // Ako ima više od 5 polica ili ukupan iznos polica prelazi 5000
+        }
+        return isDanger;
     }
     // Klik na gumb za otvaranje modala s detaljima partnera
     $(document).on('click', '.viewDetailsBtn', function () {

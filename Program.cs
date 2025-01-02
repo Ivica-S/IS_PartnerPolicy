@@ -17,7 +17,7 @@ builder.Services.AddScoped<PartnerRepository>(provider =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Config. HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

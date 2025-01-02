@@ -267,6 +267,6 @@ namespace IS_PartnerPolicy.Repository
                 return result > 0;
             }
         }
-
+      
     }
 }
