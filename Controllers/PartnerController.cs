@@ -47,28 +47,36 @@ namespace IS_PartnerPolicy.Controllers
         // Akcija za prikazivanje forme za uređivanje partnera
         public IActionResult EditPartner(int id)
         {
-            var partner = _repository.GetPartnerById(id);
-            if (partner == null)
-                return NotFound(); // Ako partner nije pronađen
-
-            var model = new EditPartnerModel
+            try
             {
-                PartnerId = partner.PartnerId,
-                FirstName = partner.FirstName,
-                LastName = partner.LastName,
-                Address = partner.Address,
-                PartnerNumber = partner.PartnerNumber,
-                CroatianPIN = partner.CroatianPIN,
-                PartnerTypeId = partner.PartnerTypeId,
-                CreatedAtUtc = partner.CreatedAtUtc,
-                CreatedByUser = partner.CreatedByUser,
-                IsForeign = partner.IsForeign,
-                ExternalCode = partner.ExternalCode,
-                Gender = partner.Gender,
+                var partner = _repository.GetPartnerById(id);
+                if (partner == null)
+                    return NotFound(); // Ako partner nije pronađen
 
-            };
+                var model = new EditPartnerModel
+                {
+                    PartnerId = partner.PartnerId,
+                    FirstName = partner.FirstName,
+                    LastName = partner.LastName,
+                    Address = partner.Address,
+                    PartnerNumber = partner.PartnerNumber,
+                    CroatianPIN = partner.CroatianPIN,
+                    PartnerTypeId = partner.PartnerTypeId,
+                    CreatedAtUtc = partner.CreatedAtUtc,
+                    CreatedByUser = partner.CreatedByUser,
+                    IsForeign = partner.IsForeign,
+                    ExternalCode = partner.ExternalCode,
+                    Gender = partner.Gender,
 
-            return View(model);
+                };
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Došlo je do pogreške prilikom dohvata podataka za edit partnera.");
+                return Json(new { success = false, message = "Došlo je do greške: " + ex.Message });
+            }
         }
         // Spremanje izmjena partnera
         [HttpPost]
@@ -82,7 +90,8 @@ namespace IS_PartnerPolicy.Controllers
             if (!ModelState.IsValid)
             {
                 _logger.LogWarning("Model za partnera s ID: {PartnerId} nije validan.", id);
-                return View(modeldto); // Vraća istu stranicu s pogreškama
+                // Vratiti greške u JSON formatu sa standardnim odgovarajućim statusom greške
+                return BadRequest(ModelState);
             }
 
             try
@@ -119,6 +128,12 @@ namespace IS_PartnerPolicy.Controllers
         [HttpPost]
         public IActionResult AddNewPartner([FromBody] PartnerCreateDto partner)
         {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogWarning("Model za novog partnera nije validan.");
+                // Vratiti greške u JSON formatu sa standardnim odgovarajućim statusom greške
+                return BadRequest(ModelState);
+            }
             if (ModelState.IsValid)
             {
                 try

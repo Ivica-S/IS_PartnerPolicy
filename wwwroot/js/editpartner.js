@@ -66,8 +66,17 @@ $(document).ready(function () {
                     if (!response.ok) {
                         // Ako nije uspješan, prikazi odgovarajuću poruku
                         return response.json().then(errorData => {
-                            sowToast(errorData.message || 'Network response was not ok');
-                            throw new Error(errorData.message || 'Network response was not ok');
+                            // Ako postoje greške u odgovoru
+                            if (errorData && Object.keys(errorData).length > 0) {
+                                // Prolazi kroz greške (ako postoji)
+                                for (let field in errorData) {
+                                    // Prikazivanje grešaka korisniku
+                                    showToast(`${field} : ${errorData[field].join(', ')}`);
+                                }
+                            } else {
+                                showToast('Network response was not ok');
+                            }
+                            throw new Error('Podaci nisu ispravni.');
                         });
                     }
                     return response.json();  // Ako je uspješan odgovor, parsiraj ga

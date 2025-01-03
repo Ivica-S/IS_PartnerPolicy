@@ -7,10 +7,7 @@ $(document).ready(function () {
         // Resetiraj formu
         $('#policyForm')[0].reset();
     });
-    // Funkcija za prikazivanje toasta
-    // function showToast() { 
-    //     $('#successToast').toast({ delay: 3000 }); // Prikazivanje toasta sa odgodom od 3 sekunde (3000 ms) $('#successToast').toast('show'); // Pokreni prikaz toasta
-    // }
+
     // Dodavanje nove police
     $('#policyForm').submit(function (e) {
         e.preventDefault();
@@ -107,8 +104,17 @@ $(document).ready(function () {
                     if (!response.ok) {
                         // Ako nije uspješan, prikazi odgovarajuću poruku
                         return response.json().then(errorData => {
-                            owToast(errorData.message || 'Network response was not ok');
-                            throw new Error(errorData.message || 'Network response was not ok');
+                            // Ako postoje greške u odgovoru
+                            if (errorData && Object.keys(errorData).length > 0) {
+                                // Prolazi kroz greške (ako postoji)
+                                for (let field in errorData) {
+                                    // Prikazivanje grešaka korisniku, ovde možeš koristiti showToast
+                                    showToast(`${field} : ${errorData[field].join(', ')}`);
+                                }
+                            } else {
+                                showToast('Network response was not ok');
+                            }
+                            throw new Error('Podaci nisu ispravni.');
                         });
                     }
                     return response.json();  // Ako je uspješan odgovor, parsiraj ga

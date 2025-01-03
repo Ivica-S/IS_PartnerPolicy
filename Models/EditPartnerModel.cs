@@ -20,6 +20,9 @@ namespace IS_PartnerPolicy.Models
         public DateTime CreatedAtUtc { get; set; }
         public string CreatedByUser { get; set; }
         public bool IsForeign { get; set; }
+        [Required]
+        [StringLength(20, MinimumLength = 10, ErrorMessage = "ExternalCode mora biti između 10 i 20 znakova.")]
+        [RegularExpression(@"^[a-zA-Z0-9]*$", ErrorMessage = "ExternalCode može sadržavati samo alfanumeričke znakove.")]
         public string ExternalCode { get; set; }
         public char Gender { get; set; }
 

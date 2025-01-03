@@ -23,29 +23,37 @@ namespace IS_PartnerPolicy.Controllers
 
         public IActionResult EditPolicy(int id)
         {
-            var partner = _repository.GetPartnerWithPolicies(id);
-            if (partner == null)
-                return NotFound(); // Ako partner nije pronađen
-
-            var model = new EditPartnerModel
+            try
             {
-                PartnerId = partner.PartnerId,
-                FirstName = partner.FirstName,
-                LastName = partner.LastName,
-                Address = partner.Address,
-                PartnerNumber = partner.PartnerNumber,
-                CroatianPIN = partner.CroatianPIN,
-                PartnerTypeId = partner.PartnerTypeId,
-                CreatedAtUtc = partner.CreatedAtUtc,
-                CreatedByUser = partner.CreatedByUser,
-                IsForeign = partner.IsForeign,
-                ExternalCode = partner.ExternalCode,
-                Gender = partner.Gender,
-                Policys = partner.Policys
+                var partner = _repository.GetPartnerWithPolicies(id);
+                if (partner == null)
+                    return Json(new { success = false, message = "Došlo je do greške: Partner s Id-em nije pronađen"  }); // Ako partner nije pronađen
 
-            };
+                var model = new EditPartnerModel
+                {
+                    PartnerId = partner.PartnerId,
+                    FirstName = partner.FirstName,
+                    LastName = partner.LastName,
+                    Address = partner.Address,
+                    PartnerNumber = partner.PartnerNumber,
+                    CroatianPIN = partner.CroatianPIN,
+                    PartnerTypeId = partner.PartnerTypeId,
+                    CreatedAtUtc = partner.CreatedAtUtc,
+                    CreatedByUser = partner.CreatedByUser,
+                    IsForeign = partner.IsForeign,
+                    ExternalCode = partner.ExternalCode,
+                    Gender = partner.Gender,
+                    Policys = partner.Policys
 
-            return View(model);
+                };
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Došlo je do pogreške prilikom dohvata podataka za edit polica.");
+                return Json(new { success = false, message = "Došlo je do greške: " + ex.Message });
+            }
         }
 
         [HttpPost]
